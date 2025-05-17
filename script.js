@@ -21,7 +21,7 @@ function secondsToMinutesSeconds(seconds) {
 
 async function displayAlbums(){
     console.log("Displaying Albums")
-    let a = await fetch("/songs/")
+    let a = await fetch("./songs/")
     let response = await a.text()
     console.log(response)
     let div = document.createElement("div")
@@ -35,7 +35,7 @@ async function displayAlbums(){
             let folder = e.href.split("songs/")[1].replaceAll("%20", " ")
             console.log(folder)
             // get metadata from info.json
-            let a = await fetch(`songs/${folder}/info.json`)
+            let a = await fetch(`./songs/${folder}/info.json`)
             let response = await a.json()
             cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}" class="album-card">
                                         <img class="album-pic" src="/songs/${folder}/cover.jpg" alt="">
