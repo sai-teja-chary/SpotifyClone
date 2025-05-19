@@ -447,12 +447,12 @@ footer p {
     }
 }
 
-@media (max-width:350px){
+@media (max-width:450px){
     .main-section{
-        height: 369px;
+        height: 445px;
     }
     .left-section2{
-        height: 450px;
+        height: 525px;
         border: none;
     }
     .left-section3{
