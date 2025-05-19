@@ -19,82 +19,72 @@ function secondsToMinutesSeconds(seconds) {
     return `${formattedMinutes}:${formattedSeconds}`;
 }
 
-async function displayAlbums(){
+async function displayAlbums() {
     console.log("Displaying Albums")
-    let a = await fetch("assets/songs")
-    let response = await a.text()
-    let div = document.createElement("div")
-    div.innerHTML = response
-    let anchors = div.querySelectorAll("a")
+    let a = await fetch("assets/songs/songs.json")
+    let albums = await a.json()
     let cardContainer = document.querySelector(".album-section")
-    let array = Array.from(anchors)
-    for(let index = 0; index < array.length; index++){
-        const e = array[index]
-        if(e.href.includes("/songs/")){
-            let folder = e.href.split("songs/")[1].replaceAll("%20", " ")
-            console.log(folder)
-            // get metadata from info.json
-            let a = await fetch(`assets/songs/${folder}/info.json`)
-            let response = await a.json()
-            cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}" class="album-card">
-                                        <img class="album-pic" src="assets/songs/${folder}/cover.jpg" alt="">
-                                        <p class="song-name">${response.title}</p>
-                                        <p class="no-of-songs">${response.noOfSongs} songs</p>
-                                    </div>`
+    // console.log(albums)
+    for (const album of albums) {
+        let folder = album.folder
+
+        try {
+            // Fetch album info
+            let infoRes = await fetch(`assets/songs/${folder}/info.json`);
+            let info = await infoRes.json();
+
+            cardContainer.innerHTML += `
+                <div data-folder="${folder}" class="album-card">
+                    <img class="album-pic" src="assets/songs/${folder}/cover.jpg" alt="">
+                    <p class="song-name">${info.title}</p>
+                    <p class="no-of-songs">${info.noOfSongs} songs</p>
+                </div>`;
+        } catch (err) {
+            console.error(`Error loading album '${folder}':`, err);
         }
     }
-
-    //Event listener whenever an albumcard is clicked,  their respective songs populate in left sidebar
-    let folders = Array.from(document.querySelectorAll(".album-card"))
-    folders.forEach(e =>{
-        e.addEventListener("click", async item =>{
-            console.log("Fetching songs")
-            songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)
-
-        })
-    })
+    // Click listener for albums
+    document.querySelectorAll(".album-card").forEach(card => {
+        card.addEventListener("click", async () => {
+            songs = await getSongs(`songs/${card.dataset.folder}`);
+        });
+    });
+    
 }
 
 async function getSongs(folder) {
     currFolder = folder;
-    let a = await fetch(`assets/${folder}`)
-    let response = await a.text()
-    let div = document.createElement("div")
-    div.innerHTML = response
-    let as = div.querySelectorAll("a")
-    songs = []
-    for (let i = 0; i < as.length; i++) {
-        const element = as[i];
-        if (element.href.endsWith(".mp3")) {
-            songs.push(element.href.split("/songs/")[1].split("/")[1].replace(".mp3", ""))
-        }
-    }
-    let songUL = document.querySelector(".song-list").getElementsByTagName("ul")[0];
-    songUL.innerHTML = ""
+
+    let res = await fetch(`assets/${folder}/info.json`);
+    let info = await res.json();
+    songs = info.songs.map(name => name.replace(".mp3", ""));
+
+    let songUL = document.querySelector(".song-list ul");
+    songUL.innerHTML = "";
+
     for (const song of songs) {
-        songUL.innerHTML = songUL.innerHTML + `<li>
-                            <img id="music-svg" src="assets/music.svg" alt="">
-                            <div class="left-song-info">
-                                <h4>${song.replaceAll("%20", " ")}</h4>
-                            </div>
-                            <div class="play-now">
-                                <p>Play</p>
-                                <img class="song-play" src="assets/play.svg" alt="">
-                            </div>
-                        </li>`;
-
+        songUL.innerHTML += `
+            <li>
+                <img id="music-svg" src="assets/music.svg" alt="">
+                <div class="left-song-info">
+                    <h4>${song}</h4>
+                </div>
+                <div class="play-now">
+                    <p>Play</p>
+                    <img class="song-play" src="assets/play.svg" alt="">
+                </div>
+            </li>`;
     }
 
-    // Modify the event listener that plays the song to also update currentIndex
-    Array.from(document.querySelector(".song-list").getElementsByTagName("li")).forEach((e, index) => {
+    // Play on click
+    Array.from(document.querySelectorAll(".song-list li")).forEach((e, index) => {
         e.addEventListener("click", () => {
             currentIndex = index;
-            console.log("playmusic - " + e.querySelector(".left-song-info").firstElementChild.innerHTML)
-            playMusic(e.querySelector(".left-song-info").firstElementChild.innerHTML);
+            playMusic(songs[index]);
         });
     });
 
-    return songs
+    return songs;
 }
 
 const playMusic = (track, pause = false) => {
@@ -108,7 +98,7 @@ const playMusic = (track, pause = false) => {
 }
 
 async function main() {
-    
+
     displayAlbums()
     // Event listener to play pause from playbar
     play.addEventListener("click", () => {
