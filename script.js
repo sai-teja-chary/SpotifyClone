@@ -21,7 +21,7 @@ function secondsToMinutesSeconds(seconds) {
 
 async function displayAlbums(){
     console.log("Displaying Albums")
-    let a = await fetch("./songs/")
+    let a = await fetch("assets/songs/")
     let response = await a.text()
     console.log(response)
     let div = document.createElement("div")
@@ -35,10 +35,10 @@ async function displayAlbums(){
             let folder = e.href.split("songs/")[1].replaceAll("%20", " ")
             console.log(folder)
             // get metadata from info.json
-            let a = await fetch(`./songs/${folder}/info.json`)
+            let a = await fetch(`assets/songs/${folder}/info.json`)
             let response = await a.json()
             cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}" class="album-card">
-                                        <img class="album-pic" src="/songs/${folder}/cover.jpg" alt="">
+                                        <img class="album-pic" src="assets/songs/${folder}/cover.jpg" alt="">
                                         <p class="song-name">${response.title}</p>
                                         <p class="no-of-songs">${response.noOfSongs} songs</p>
                                     </div>`
@@ -58,7 +58,7 @@ async function displayAlbums(){
 
 async function getSongs(folder) {
     currFolder = folder;
-    let a = await fetch(`./${folder}/`)
+    let a = await fetch(`assets/${folder}/`)
     let response = await a.text()
     let div = document.createElement("div")
     div.innerHTML = response
@@ -99,7 +99,7 @@ async function getSongs(folder) {
 }
 
 const playMusic = (track, pause = false) => {
-    currentSong.src = `${currFolder}/` + track + ".mp3";
+    currentSong.src = `assets/${currFolder}/${track}.mp3`
     if (!pause) {
         currentSong.play();
         play.src = "assets/pause.svg"
