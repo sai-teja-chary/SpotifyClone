@@ -47,6 +47,8 @@ async function displayAlbums() {
     document.querySelectorAll(".album-card").forEach(card => {
         card.addEventListener("click", async () => {
             songs = await getSongs(`songs/${card.dataset.folder}`);
+            document.querySelector(".left-sidebar").style.top = "75px"
+           
         });
     });
     
@@ -81,6 +83,7 @@ async function getSongs(folder) {
         e.addEventListener("click", () => {
             currentIndex = index;
             playMusic(songs[index]);
+            document.querySelector(".left-sidebar").style.top = "-200%"
         });
     });
 
