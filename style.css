@@ -287,7 +287,7 @@ footer p {
     grid-area: play-bar;
     background-color: #1f1f1f;
     border-radius: 5px;
-    height: 80px;
+    height: 95px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -369,6 +369,9 @@ footer p {
 }
 
 @media (max-width:1000px) {
+    .album-section{
+        height: 540px;
+    }
     .left-sidebar {
         width: 320px;
         position: absolute;
@@ -422,6 +425,9 @@ footer p {
 }
 
 @media (max-width:550px){
+    .album-section{
+        height: 510px;
+    }
     .play-bar{
         height: auto;
         flex-direction: column;
@@ -438,5 +444,24 @@ footer p {
     }
     .main{
         margin: 0 5px 5px 0;
+    }
+}
+
+@media (max-width:350px){
+    .main-section{
+        height: 369px;
+    }
+    .left-section2{
+        height: 450px;
+        border: none;
+    }
+    .left-section3{
+        display: none;
+    }
+    .main-heading{
+        margin-bottom: 0;
+    }
+    .play-bar{
+        height: 120px;
     }
 }
