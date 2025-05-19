@@ -21,9 +21,8 @@ function secondsToMinutesSeconds(seconds) {
 
 async function displayAlbums(){
     console.log("Displaying Albums")
-    let a = await fetch("assets/songs/")
+    let a = await fetch("assets/songs")
     let response = await a.text()
-    console.log(response)
     let div = document.createElement("div")
     div.innerHTML = response
     let anchors = div.querySelectorAll("a")
@@ -58,7 +57,7 @@ async function displayAlbums(){
 
 async function getSongs(folder) {
     currFolder = folder;
-    let a = await fetch(`assets/${folder}/`)
+    let a = await fetch(`assets/${folder}`)
     let response = await a.text()
     let div = document.createElement("div")
     div.innerHTML = response
