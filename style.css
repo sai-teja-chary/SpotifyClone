@@ -53,45 +53,62 @@ body {
     grid-area: global-nav;
 }
 
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+}
 
 .logo {
     margin: 10px 0 0 20px;
     width: 40px;
 }
 
-.home-search-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
+.logo-text {
+    font-size: 18px;
+    font-weight: 600;
 }
 
-.home-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #1f1f1f;
+nav {
     display: flex;
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
 }
 
-.home-icon img {
-    width: 25px;
+#signup {
+    font-family: "Poppins";
+    width: 110px;
+    height: 30px;
+    font-weight: 500;
+    font-size: 15px;
+    color: white;
+    cursor: pointer;
+    background-color: transparent;
+    border-style: none;
 }
 
-.search-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #1f1f1f;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#signup:hover {
+    font-size: 16px;
 }
 
-.search-icon img {
-    width: 25px;
+#login {
+    font-family: "Poppins";
+    width: 110px;
+    height: 40px;
+    font-weight: 500;
+    font-size: 15px;
+    color: black;
+    cursor: pointer;
+    background-color: white;
+    border-style: none;
+    border-radius: 20px;
+}
+
+#login:hover {
+    font-size: 16px;
 }
 
 .left-sidebar {
@@ -120,8 +137,8 @@ body {
 }
 
 .left-section2 {
-    display: flex;
     height: 500px;
+    display: flex;
     overflow-y: auto;
     margin-bottom: 20px;
     border-bottom: 1px solid white;
@@ -177,7 +194,7 @@ body {
 }
 
 .left-section3 {
-    height: 281px;
+    height: 210px;
     margin: 15px;
     display: flex;
     flex-direction: column;
@@ -216,7 +233,6 @@ footer p {
 
 .language-button img {
     width: 15px;
-    ;
 }
 
 .main-section {
@@ -234,7 +250,7 @@ footer p {
 }
 
 .hamburger {
-    width: 20px;
+    width: 30px;
     display: none;
 }
 
@@ -276,7 +292,8 @@ footer p {
     font-size: 16px;
     margin: 5px;
 }
-.no-of-songs{
+
+.no-of-songs {
     font-size: 14px;
     margin: 5px;
 }
@@ -369,9 +386,14 @@ footer p {
 }
 
 @media (max-width:1000px) {
-    .album-section{
+    .left-section2 {
+        height: 430px;
+    }
+
+    .album-section {
         height: 540px;
     }
+
     .left-sidebar {
         width: 320px;
         position: absolute;
@@ -424,44 +446,77 @@ footer p {
 
 }
 
-@media (max-width:550px){
-    .album-section{
-        height: 510px;
-    }
-    .play-bar{
+@media (max-width:550px) {
+    .play-bar {
         height: auto;
         flex-direction: column;
         gap: 20px;
     }
-    .song-info{
+    .left-section2{
+        height: 440px;
+    }
+    .song-info {
         text-align: center;
     }
-    .song-time-vol{
+
+    .song-time-vol {
         margin-bottom: 20px;
     }
-    .left-section3{
-        height: 331px;
-    }
-    .main{
+
+    .main {
         margin: 0 5px 5px 0;
     }
 }
 
-@media (max-width:450px){
-    .main-section{
+@media (max-width:450px) {
+    .main-section {
         height: 445px;
     }
-    .left-section2{
-        height: 525px;
-        border: none;
+
+    .left-section2 {
+        height: 350px;
+    }
+
+    footer p {
+        font-size: 10px;
     }
     .left-section3{
-        display: none;
+        justify-content: start;
+        height: 160px;
     }
-    .main-heading{
-        margin-bottom: 0;
+    .left-section3 h4 {
+        font-size: 11px;
+        font-weight: 500;
+        margin-bottom: 50px;
     }
-    .play-bar{
+
+    .language-button {
+        width: 70px;
+        height: 25px;
+        font-size: 10px;
+    }
+
+    .language-button img {
+        width: 12px;
+    }
+
+
+    .play-bar {
         height: 120px;
     }
+
+    .logo {
+        width: 30px;
+    }
+
+    .logo-text {
+        font-size: 15px;
+    }
+
+    #signup,
+    #login {
+        width: 90px;
+        font-size: 14px;
+    }
+
 }

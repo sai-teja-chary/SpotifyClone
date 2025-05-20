@@ -37,7 +37,7 @@ async function displayAlbums() {
                 <div data-folder="${folder}" class="album-card">
                     <img class="album-pic" src="assets/songs/${folder}/cover.jpg" alt="">
                     <p class="song-name">${info.title}</p>
-                    <p class="no-of-songs">${info.noOfSongs} songs</p>
+                    <p class="no-of-songs">${info.noOfSongs}</p>
                 </div>`;
         } catch (err) {
             console.error(`Error loading album '${folder}':`, err);
@@ -96,6 +96,7 @@ const playMusic = (track, pause = false) => {
         currentSong.play();
         play.src = "assets/pause.svg"
     }
+    
     document.querySelector(".play-bar").firstElementChild.innerHTML = decodeURI(track) + ".mp3";
     document.querySelector(".song-time").innerHTML = "00:00 / 00:00"
 }
@@ -151,11 +152,37 @@ async function main() {
     currentSong.addEventListener("timeupdate", () => {
         document.querySelector(".song-time").innerHTML = `${secondsToMinutesSeconds(currentSong.currentTime)} / ${secondsToMinutesSeconds(currentSong.duration)}`
         document.querySelector(".seek-circle").style.left = (currentSong.currentTime / currentSong.duration) * 100 + "%"
+        if(currentIndex < songs.length-1 && currentSong.currentTime == currentSong.duration){
+            console.log("Playing next song")
+            currentIndex++
+            playMusic(songs[currentIndex])
+        }
     })
 
     //Event Listener for volumer bar
     document.querySelector(".volume-bar").addEventListener("change", e => {
         currentSong.volume = parseInt(e.target.value) / 100
+        if (currentSong.volume == 0){
+            document.querySelector(".volume-icon").src = "assets/mute.svg"
+        }
+        else{
+            document.querySelector(".volume-icon").src = "assets/volume.svg"
+        }
+    })
+
+    document.querySelector(".volume-icon").addEventListener("click", ()=>{
+        console.log("Volume icon clicked")
+        if(currentSong.volume > 0){
+            document.querySelector(".volume-icon").src = "assets/mute.svg"
+            currentSong.volume = 0
+            document.querySelector(".volume-bar").value = 0
+        }
+        else{
+            document.querySelector(".volume-icon").src = "assets/volume.svg"
+            currentSong.volume = 0.1
+            document.querySelector(".volume-bar").value = 10
+        }
+
     })
 }
 
