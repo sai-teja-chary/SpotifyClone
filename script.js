@@ -157,6 +157,9 @@ async function main() {
             currentIndex++
             playMusic(songs[currentIndex])
         }
+        else if(currentSong.currentTime == currentSong.duration){
+            play.src = "assets/play.svg"
+        }
     })
 
     //Event Listener for volumer bar
