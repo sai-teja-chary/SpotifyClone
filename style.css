@@ -471,6 +471,10 @@ footer p {
 @media (max-width:450px) {
     .main-section {
         height: 445px;
+        min-width: 320px;
+    }
+    .play-bar{
+        min-width: 320px;
     }
 
     .left-section2 {
